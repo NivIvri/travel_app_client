@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "./LoginPage.css"; // Reuse existing button styling
 
 function Header({ onLogout }) {
   const navigate = useNavigate();
@@ -11,12 +12,10 @@ function Header({ onLogout }) {
 
   return (
     <header style={styles.header}>
-      <div style={styles.left}>
-        <Link to="/create" style={styles.link}>Create New Route</Link>
-        <Link to="/history" style={styles.link}>Routes History</Link>
-      </div>
-      <div style={styles.right}>
-        <button onClick={handleLogout} style={styles.logout}>Logout</button>
+      <div style={styles.toolbar}>
+        <Link to="/create" className="switch-btn">Create New Route</Link>
+        <Link to="/history" className="switch-btn">Routes History</Link>
+        <button onClick={handleLogout} className="switch-btn">Logout</button>
       </div>
     </header>
   );
@@ -24,31 +23,23 @@ function Header({ onLogout }) {
 
 const styles = {
   header: {
-    position: "sticky",
+    position: "fixed",
     top: 0,
-    background: "#222",
-    color: "white",
+    left: 0,
+    width: "100%",
+    background: "rgba(15, 15, 30, 0.8)",
+    padding: "1rem 0",
+    zIndex: 1000,
+    backdropFilter: "blur(10px)",
+    borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+  },
+  toolbar: {
+    maxWidth: "900px",
+    margin: "0 auto",
     display: "flex",
     justifyContent: "space-between",
-    padding: "1rem 2rem",
-    zIndex: 1000,
-  },
-  left: {
-    display: "flex",
-    gap: "1rem",
-  },
-  right: {},
-  link: {
-    color: "white",
-    textDecoration: "none",
-    fontWeight: "bold",
-  },
-  logout: {
-    background: "red",
-    border: "none",
-    color: "white",
-    padding: "0.5rem 1rem",
-    cursor: "pointer",
+    alignItems: "center",
+    padding: "0 2rem",
   },
 };
 
