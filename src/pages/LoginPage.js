@@ -1,47 +1,65 @@
-import React, { useState } from "react";
-//import "./LoginPage.css";
-import "./LoginPage.css"; // Ensure you have this CSS file for styles
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loginUser, registerUser } from '../api/authApi';
+import { useAuthStore } from '../store/authStore';
+import '../style/LoginPage.css';
 
-function LoginPage({ onLogin }) {
+function LoginPage() {
+  const navigate = useNavigate();
+
+  
+  // Zustand store
+  const login = useAuthStore((state) => state.login);
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/dashboard');
+    }
+  }, [isLoggedIn, navigate]);
+
   const toggleForm = () => {
-    setIsLogin(!isLogin);
-    setFormData({ username: "", email: "", password: "", confirmPassword: "" });
+    setIsLogin((prev) => !prev);
+    setFormData({
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    });
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!isLogin && formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
+      alert('Passwords do not match');
       return;
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/${isLogin ? "login" : "register"}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message);
+      const data = isLogin
+        ? await loginUser(formData)
+        : await registerUser(formData);
 
       alert(data.message);
+
       if (isLogin) {
-        onLogin(); // trigger redirect to dashboard
+        login({ username: formData.username }); // 🟢 כאן השימוש האמיתי ב־store
       } else {
-        setIsLogin(true); // switch to login after register
+        setIsLogin(true);
       }
     } catch (err) {
       alert(`Error: ${err.message}`);
@@ -52,7 +70,8 @@ function LoginPage({ onLogin }) {
     <div className="futuristic-bg">
       <div className="glass-card">
         <h1 className="neon-title">Welcome</h1>
-        <h2 className="switch-title">{isLogin ? "Login" : "Register"}</h2>
+        <h2 className="switch-title">{isLogin ? 'Login' : 'Register'}</h2>
+
         <form onSubmit={handleSubmit} className="futuristic-form">
           {!isLogin && (
             <input
@@ -91,13 +110,14 @@ function LoginPage({ onLogin }) {
             />
           )}
           <button type="submit" className="neon-btn">
-            {isLogin ? "Login" : "Register"}
+            {isLogin ? 'Login' : 'Register'}
           </button>
         </form>
+
         <p className="switch-text">
-          {isLogin ? "Don't have an account?" : "Already have an account?"}
+          {isLogin ? "Don't have an account?" : 'Already have an account?'}
           <button onClick={toggleForm} className="switch-btn">
-            {isLogin ? " Register" : " Login"}
+            {isLogin ? ' Register' : ' Login'}
           </button>
         </p>
       </div>

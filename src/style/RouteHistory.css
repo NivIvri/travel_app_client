@@ -1,0 +1,9 @@
+/* src/style/RouteHistory.css */
+
+.trip-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 40%;
+  margin-top: 2rem;
+}
