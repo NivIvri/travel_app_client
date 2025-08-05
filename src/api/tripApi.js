@@ -1,4 +1,7 @@
 import polyline from "@mapbox/polyline";
+
+const API_BASE = "http://localhost:5000/api";
+
 export async function getRoute(startCoords, endCoords, type = "cycling-regular") {
   const apiKey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImM4NGM5ZTcxZjUxNjRlYjNhNjE2MmVjODA1YzhlNjRmIiwiaCI6Im11cm11cjY0In0=";
   const url = `https://api.openrouteservice.org/v2/directions/${type}`;
@@ -29,7 +32,6 @@ export async function getRoute(startCoords, endCoords, type = "cycling-regular")
   return coordinates;
 }
 
-
 export async function getCoordinatesORS(cityName) {
   const apiKey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImM4NGM5ZTcxZjUxNjRlYjNhNjE2MmVjODA1YzhlNjRmIiwiaCI6Im11cm11cjY0In0=";
   const url = `https://api.openrouteservice.org/geocode/search`;
@@ -43,4 +45,37 @@ export async function getCoordinatesORS(cityName) {
 
   const [lon, lat] = data.features[0].geometry.coordinates;
   return [lon, lat];
+}
+
+// Server-side route operations
+export async function saveRouteToServer(routeData) {
+  const response = await fetch(`${API_BASE}/routes`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(routeData),
+  });
+
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message);
+  return data;
+}
+
+export async function getUserRoutes(username) {
+  const response = await fetch(`${API_BASE}/routes?username=${encodeURIComponent(username)}`);
+  
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message);
+  return data;
+}
+
+export async function deleteRouteFromServer(routeId, username) {
+  const response = await fetch(`${API_BASE}/routes/${routeId}?username=${encodeURIComponent(username)}`, {
+    method: "DELETE",
+  });
+
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message);
+  return data;
 }

@@ -1,15 +1,152 @@
-/* Green-themed glass card */
-.trip-display{
-    margin-top: 15px;
-    background: #a5d6a754;
-    width: 50%;
-    display: flex
-;
-    justify-content: center;
+/* TripDisplay.css - Modern Gentle Design */
+
+.trip-display {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  align-items: center;
+}
+
+.trip-info {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.trip-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.trip-details {
+  font-size: 1.1rem;
+  opacity: 0.8;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.trip-detail {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #2c3e50;
+}
+
+.map-container {
+  width: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.weather-section {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.weather-title {
+  color: #2c3e50;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.weather-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.weather-day {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  color: #2c3e50;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.weather-date {
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.weather-temp {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.weather-precip {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.day-separator {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(127, 179, 211, 0.3), transparent);
+  margin: 20px 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .trip-display {
+    padding: 20px;
+    margin: 15px auto;
+  }
+  
+  .trip-title {
+    font-size: 1.6rem;
+  }
+  
+  .trip-details {
+    font-size: 1rem;
+    gap: 10px;
+  }
+  
+  .trip-detail {
+    padding: 8px 15px;
+  }
+  
+  .weather-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .weather-day {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .trip-display {
+    padding: 15px;
+  }
+  
+  .trip-title {
+    font-size: 1.4rem;
+  }
+  
+  .trip-details {
     flex-direction: column;
-    align-content: flex-start;
-    gap: 20px;
     align-items: center;
-    padding-top: 13px;
-    border-radius: 11px;
+  }
 }

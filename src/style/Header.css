@@ -1,31 +1,89 @@
+/* Header.css - Modern Gentle Design */
+
 .header {
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e5e5;
-  padding: 0.8rem 2rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 1rem 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
   position: fixed;
   top: 0;
-  width: 100%;
-  z-index: 10;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .nav-button {
-  background: none;
-  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   font-size: 1rem;
   font-weight: 600;
-  color: #1dbf73; /* ירוק Fiverr */
+  color: #2c3e50;
   cursor: pointer;
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  transition: background 0.2s, color 0.2s;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .nav-button:hover {
-  background-color: #e6f8f0;
-  color: #148f5c;
+  background: rgba(255, 255, 255, 0.3);
+  border-color: #7FB3D3;
+  box-shadow: 0 0 15px rgba(127, 179, 211, 0.3);
+  transform: translateY(-1px);
+}
+
+.nav-button.active {
+  background: linear-gradient(45deg, #7FB3D3, #5D9BC3);
+  border-color: #7FB3D3;
+  box-shadow: 0 0 15px rgba(127, 179, 211, 0.4);
+  color: #fff;
+}
+
+/* Logo or brand styling */
+.header-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  letter-spacing: 2px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .header {
+    padding: 0.8rem 1rem;
+    gap: 1rem;
+  }
+  
+  .nav-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .header-brand {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 0.6rem 0.8rem;
+    gap: 0.8rem;
+  }
+  
+  .nav-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .header-brand {
+    font-size: 1.1rem;
+  }
 }

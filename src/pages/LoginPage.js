@@ -57,7 +57,7 @@ function LoginPage() {
       alert(data.message);
 
       if (isLogin) {
-        login({ username: formData.username }); // 🟢 כאן השימוש האמיתי ב־store
+        login({ username: formData.username });
       } else {
         setIsLogin(true);
       }

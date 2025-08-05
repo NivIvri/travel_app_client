@@ -15,12 +15,13 @@ function Header() {
 
   return (
     <nav className="header">
+          <button className="nav-button" onClick={() => navigate("/create")}>
+        Create Route
+      </button>
       <button className="nav-button" onClick={() => navigate("/dashboard")}>
         Dashboard
       </button>
-      <button className="nav-button" onClick={() => navigate("/create")}>
-        Create Route
-      </button>
+  
       <button className="nav-button" onClick={() => navigate("/history")}>
         History
       </button>

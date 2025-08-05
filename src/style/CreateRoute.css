@@ -1,0 +1,162 @@
+/* CreateRoute.css - Modern Gentle Design */
+
+.futuristic-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 100%;
+  max-width: 500px;
+  margin-top: 80px; /* Account for fixed header */
+}
+
+.neon-title {
+  color: #2c3e50;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  letter-spacing: 2px;
+}
+
+.futuristic-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.futuristic-form input,
+.futuristic-form select {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  padding: 15px 20px;
+  font-size: 1rem;
+  color: #2c3e50;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.futuristic-form input::placeholder {
+  color: rgba(44, 62, 80, 0.6);
+}
+
+.futuristic-form input:focus,
+.futuristic-form select:focus {
+  outline: none;
+  border-color: #7FB3D3;
+  box-shadow: 0 0 15px rgba(127, 179, 211, 0.3);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.futuristic-form input:disabled,
+.futuristic-form select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.futuristic-form select option {
+  background: #f8f9fa;
+  color: #2c3e50;
+}
+
+.neon-btn {
+  background: linear-gradient(45deg, #7FB3D3, #5D9BC3);
+  border: none;
+  border-radius: 12px;
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(127, 179, 211, 0.3);
+}
+
+.neon-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(127, 179, 211, 0.4);
+  background: linear-gradient(45deg, #5D9BC3, #7FB3D3);
+}
+
+.neon-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.neon-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 8px rgba(127, 179, 211, 0.2);
+}
+
+/* Error message styling */
+.error-message {
+  background: rgba(231, 76, 60, 0.1);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  border-radius: 8px;
+  padding: 15px;
+  color: #e74c3c;
+  text-align: center;
+  margin-bottom: 20px;
+  backdrop-filter: blur(5px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .futuristic-bg {
+    padding: 10px;
+  }
+  
+  .glass-card {
+    margin-top: 60px;
+    padding: 20px;
+    border-radius: 15px;
+  }
+  
+  .neon-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .futuristic-form {
+    gap: 15px;
+  }
+  
+  .futuristic-form input,
+  .futuristic-form select {
+    padding: 12px 15px;
+    font-size: 0.9rem;
+  }
+  
+  .neon-btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .neon-title {
+    font-size: 1.8rem;
+  }
+  
+  .glass-card {
+    padding: 15px;
+  }
+}
