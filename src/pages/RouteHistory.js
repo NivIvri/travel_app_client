@@ -9,7 +9,7 @@ function RouteHistory() {
   return (
     <div className="futuristic-bg">
       <div className="glass-card">
-        <h2 className="neon-title">Your Trip History</h2>
+        <div className="neon-title">Your Trip History</div>
         </div>
         {history.length === 0 ? (
           <p className="dashboard-text">No routes yet. Go plan your first trip!</p>

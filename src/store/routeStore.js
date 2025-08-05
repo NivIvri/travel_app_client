@@ -1,40 +1,48 @@
 // src/store/routeStore.js
 import { create } from 'zustand';
 
-
 export const useRouteStore = create((set) => ({
   currentRoute: {
     destination: '',
     type: '',
-    path: [],
+    path: [],        // full route
+    pathDays: [],    // route split into days
+    forecast: [],    // optional: 3-day forecast (not for DB)
   },
 
-  // All saved trips
   history: [],
 
-  // Set new trip
-  setRoute: ({ destination, type ,path}) =>
+  setRoute: ({ destination, type, path, pathDays = [], forecast = [] }) =>
     set(() => ({
       currentRoute: {
         destination,
         type,
-        path
+        path,
+        pathDays,
+        forecast,
       },
     })),
 
-  // Save to history
   saveRouteToHistory: () =>
     set((state) => ({
-      history: [...state.history, state.currentRoute],
+      history: [
+        ...state.history,
+        {
+          destination: state.currentRoute.destination,
+          type: state.currentRoute.type,
+          date: new Date().toISOString(),
+        },
+      ],
     })),
 
-  // Reset current route
   resetRoute: () =>
     set(() => ({
       currentRoute: {
         destination: '',
         type: '',
         path: [],
+        pathDays: [],
+        forecast: [],
       },
     })),
 }));

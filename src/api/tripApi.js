@@ -5,6 +5,7 @@ export async function getRoute(startCoords, endCoords, type = "cycling-regular")
 
   const body = {
     coordinates: [startCoords, endCoords],
+      radiuses: [1000, 1000] // allow more flexible match to road network
   };
 
   const response = await fetch(url, {
@@ -26,4 +27,20 @@ export async function getRoute(startCoords, endCoords, type = "cycling-regular")
   const decoded = polyline.decode(data.routes[0].geometry);
   const coordinates = decoded.map(([lat, lon]) => [lon, lat]);
   return coordinates;
+}
+
+
+export async function getCoordinatesORS(cityName) {
+  const apiKey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImM4NGM5ZTcxZjUxNjRlYjNhNjE2MmVjODA1YzhlNjRmIiwiaCI6Im11cm11cjY0In0=";
+  const url = `https://api.openrouteservice.org/geocode/search`;
+
+  const response = await fetch(`${url}?api_key=${apiKey}&text=${encodeURIComponent(cityName)}`);
+  const data = await response.json();
+
+  if (!data.features || data.features.length === 0) {
+    throw new Error("Location not found");
+  }
+
+  const [lon, lat] = data.features[0].geometry.coordinates;
+  return [lon, lat];
 }

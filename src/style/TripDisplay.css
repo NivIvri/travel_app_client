@@ -1,4 +1,15 @@
 /* Green-themed glass card */
 .trip-display{
-  margin-top: 15px;
+    margin-top: 15px;
+    background: #a5d6a754;
+    width: 50%;
+    display: flex
+;
+    justify-content: center;
+    flex-direction: column;
+    align-content: flex-start;
+    gap: 20px;
+    align-items: center;
+    padding-top: 13px;
+    border-radius: 11px;
 }

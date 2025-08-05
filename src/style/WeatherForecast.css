@@ -1,0 +1,8 @@
+.weather-forecast{
+        background: white;
+    display: flex;
+    flex-direction: column;
+    padding: 17px;
+    border-radius: 18px;
+    width: 79%;
+}
