@@ -1,34 +1,93 @@
 // src/components/Header.js
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 import "../style/Header.css";
 
 function Header() {
   const navigate = useNavigate();
-  const logout = useAuthStore((state) => state.logout);
+  const location = useLocation();
+  const { logout, user } = useAuthStore();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
+  const isActive = (path) => location.pathname === path;
+
   return (
-    <nav className="header">
-          <button className="nav-button" onClick={() => navigate("/create")}>
-        Create Route
-      </button>
-      <button className="nav-button" onClick={() => navigate("/dashboard")}>
-        Dashboard
-      </button>
-  
-      <button className="nav-button" onClick={() => navigate("/history")}>
-        History
-      </button>
-      <button className="nav-button" onClick={handleLogout}>
-        Logout
-      </button>
-    </nav>
+    <header className="header">
+      <div className="header-container">
+        <a href="/" className="logo">
+          RoutePlanner
+        </a>
+        
+        <nav className={`nav-menu ${isMobileMenuOpen ? 'open' : ''}`}>
+          <a 
+            href="/create" 
+            className={`nav-link ${isActive('/create') ? 'active' : ''}`}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/create");
+              setIsMobileMenuOpen(false);
+            }}
+          >
+            Create Route
+          </a>
+          <a 
+            href="/dashboard" 
+            className={`nav-link ${isActive('/dashboard') ? 'active' : ''}`}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/dashboard");
+              setIsMobileMenuOpen(false);
+            }}
+          >
+            Dashboard
+          </a>
+          <a 
+            href="/history" 
+            className={`nav-link ${isActive('/history') ? 'active' : ''}`}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/history");
+              setIsMobileMenuOpen(false);
+            }}
+          >
+            History
+          </a>
+        </nav>
+
+        <div className="user-section">
+          {user ? (
+            <>
+              <div className="user-info">
+                Welcome, {user.username}
+              </div>
+              <button className="logout-btn" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <button 
+              className="login-btn"
+              onClick={() => navigate("/")}
+            >
+              Login
+            </button>
+          )}
+        </div>
+
+        <button 
+          className="mobile-menu-btn"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          ☰
+        </button>
+      </div>
+    </header>
   );
 }
 

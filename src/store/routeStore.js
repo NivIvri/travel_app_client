@@ -1,6 +1,7 @@
 // src/store/routeStore.js
 import { create } from 'zustand';
 import { saveRouteToServer, getUserRoutes, deleteRouteFromServer } from '../api/tripApi';
+import polyline from '@mapbox/polyline';
 
 export const useRouteStore = create((set, get) => ({
   currentRoute: {
@@ -63,12 +64,61 @@ export const useRouteStore = create((set, get) => ({
     try {
       const response = await saveRouteToServer(routeData);
       
-      // Add to local state (MongoDB returns the saved route)
+      // Decode the saved route before adding to local state
+      const savedRoute = response.route;
+      console.log('Saved route from server:', savedRoute);
+      const decodedRoute = { ...savedRoute };
+      
+      // Decode path if it's encoded
+      if (savedRoute.pathEncoded) {
+        try {
+          const decoded = polyline.decode(savedRoute.pathEncoded);
+          decodedRoute.path = decoded.map(([lat, lon]) => [lon, lat]); // Convert to [lon, lat] format
+        } catch (error) {
+          console.error('Error decoding saved route path:', error);
+          decodedRoute.path = routeData.path; // Use original data as fallback
+        }
+      } else if (savedRoute.path && Array.isArray(savedRoute.path)) {
+        // Route has regular path data (not encoded)
+        decodedRoute.path = savedRoute.path;
+      } else {
+        // Fallback to original data
+        decodedRoute.path = routeData.path;
+      }
+      
+      // Decode pathDays if they're encoded
+      if (savedRoute.pathDaysEncoded && Array.isArray(savedRoute.pathDaysEncoded)) {
+        try {
+          decodedRoute.pathDays = savedRoute.pathDaysEncoded.map(encodedDay => {
+            const decoded = polyline.decode(encodedDay);
+            return decoded.map(([lat, lon]) => [lon, lat]); // Convert to [lon, lat] format
+          });
+        } catch (error) {
+          console.error('Error decoding saved route pathDays:', error);
+          decodedRoute.pathDays = routeData.pathDays; // Use original data as fallback
+        }
+      } else if (savedRoute.pathDays && Array.isArray(savedRoute.pathDays)) {
+        // Route has regular pathDays data (not encoded)
+        decodedRoute.pathDays = savedRoute.pathDays;
+      } else {
+        // Fallback to original data
+        decodedRoute.pathDays = routeData.pathDays;
+      }
+      
+      // Add to local state with decoded data
+      console.log('Decoded route for local state:', decodedRoute);
+      
+      // Ensure the route has a timestamp
+      const routeWithTimestamp = {
+        ...decodedRoute,
+        savedAt: decodedRoute.savedAt || decodedRoute.createdAt || decodedRoute.date || new Date().toISOString()
+      };
+      
       set((state) => ({
-        savedRoutes: [...state.savedRoutes, response.route],
+        savedRoutes: [...state.savedRoutes, routeWithTimestamp],
       }));
       
-      return response.route;
+      return decodedRoute;
     } catch (error) {
       console.error('Error saving route to server:', error);
       throw error;
@@ -85,6 +135,7 @@ export const useRouteStore = create((set, get) => ({
     
     try {
       const routes = await getUserRoutes(username);
+      console.log('Loaded routes from server:', routes);
       set({ savedRoutes: routes, isLoading: false });
       return routes;
     } catch (error) {

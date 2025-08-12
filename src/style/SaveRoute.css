@@ -1,204 +1,190 @@
-/* SaveRoute.css - Gentle Design */
+/* SaveRoute.css - Elegant & Sophisticated */
 
-.save-route-container {
-  margin: 20px 0;
-  width: 100%;
-  max-width: 500px;
-}
-
-.save-route-btn {
-  background: linear-gradient(45deg, #7FB3D3, #5D9BC3);
-  border: none;
-  border-radius: 12px;
-  padding: 12px 24px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 4px 15px rgba(127, 179, 211, 0.3);
-  width: 100%;
-}
-
-.save-route-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(127, 179, 211, 0.4);
-  background: linear-gradient(45deg, #5D9BC3, #7FB3D3);
-}
-
-.login-required {
-  background: rgba(231, 76, 60, 0.1);
-  border: 1px solid rgba(231, 76, 60, 0.3);
-  border-radius: 12px;
-  padding: 15px;
+.save-section {
   text-align: center;
-  color: #e74c3c;
-  font-weight: 600;
-  font-size: 0.95rem;
+  margin-top: 32px;
 }
 
-.save-route-form {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+.save-form {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  padding: 25px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  margin-top: 15px;
+  padding: 32px;
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: 
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-.save-route-form h3 {
-  color: #2c3e50;
-  text-align: center;
-  font-size: 1.4rem;
+.save-form h3 {
+  font-size: 24px;
   font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 24px;
+  letter-spacing: -0.025em;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
   margin-bottom: 20px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
-  margin-bottom: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.form-group label {
-  display: block;
-  color: #2c3e50;
-  font-weight: 600;
-  margin-bottom: 8px;
-  font-size: 0.95rem;
+.form-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  letter-spacing: 0.025em;
 }
 
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 12px;
+.form-input {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(203, 213, 225, 0.5);
+  border-radius: 10px;
   padding: 12px 16px;
-  font-size: 1rem;
-  color: #2c3e50;
-  backdrop-filter: blur(5px);
-  transition: all 0.3s ease;
+  font-size: 14px;
+  color: #1e293b;
+  transition: all 0.2s ease;
   font-family: inherit;
 }
 
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-  color: rgba(44, 62, 80, 0.6);
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
+.form-input:focus {
   outline: none;
-  border-color: #7FB3D3;
-  box-shadow: 0 0 15px rgba(127, 179, 211, 0.3);
-  background: rgba(255, 255, 255, 0.3);
+  border-color: #3b82f6;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.form-group input:disabled,
-.form-group textarea:disabled {
+.form-input::placeholder {
+  color: #9ca3af;
+}
+
+.form-input:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.form-group textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
-.form-actions {
-  display: flex;
-  gap: 15px;
-  margin-top: 25px;
-}
-
-.cancel-btn {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 12px;
-  padding: 12px 20px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #2c3e50;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-}
-
-.cancel-btn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-1px);
-}
-
-.cancel-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  background: rgba(248, 250, 252, 0.8);
 }
 
 .save-btn {
-  flex: 1;
-  background: linear-gradient(45deg, #7FB3D3, #5D9BC3);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
   border: none;
-  border-radius: 12px;
-  padding: 12px 20px;
-  font-size: 1rem;
+  border-radius: 10px;
+  padding: 14px 32px;
+  font-size: 16px;
   font-weight: 600;
-  color: #fff;
   cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 4px 15px rgba(127, 179, 211, 0.3);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .save-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(127, 179, 211, 0.4);
-  background: linear-gradient(45deg, #5D9BC3, #7FB3D3);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .save-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
-  box-shadow: 0 2px 8px rgba(127, 179, 211, 0.2);
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.form-actions .save-btn {
+  flex: 2;
+}
+
+.form-actions .btn-secondary {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.8);
+  color: #475569;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  border: 1px solid rgba(203, 213, 225, 0.5);
+  transition: all 0.2s ease;
+}
+
+.form-actions .btn-secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.form-actions .btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.login-required {
+  text-align: center;
+  padding: 24px;
+}
+
+.login-required p {
+  color: #64748b;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .save-route-container {
-    max-width: 100%;
+  .save-form {
+    padding: 24px;
+    border-radius: 16px;
   }
   
-  .save-route-form {
-    padding: 20px;
-  }
-  
-  .save-route-form h3 {
-    font-size: 1.2rem;
+  .form-row {
+    flex-direction: column;
+    gap: 16px;
   }
   
   .form-actions {
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
   
-  .cancel-btn,
-  .save-btn {
+  .form-actions .save-btn,
+  .form-actions .btn-secondary {
     flex: none;
+    width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  .save-route-form {
-    padding: 15px;
+  .save-form {
+    padding: 20px;
   }
   
-  .save-route-form h3 {
-    font-size: 1.1rem;
+  .save-form h3 {
+    font-size: 20px;
+  }
+  
+  .form-input {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+  
+  .save-btn,
+  .form-actions .btn-secondary {
+    padding: 12px 20px;
+    font-size: 15px;
   }
 } 

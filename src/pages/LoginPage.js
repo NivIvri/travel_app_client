@@ -7,7 +7,6 @@ import '../style/LoginPage.css';
 function LoginPage() {
   const navigate = useNavigate();
 
-  
   // Zustand store
   const login = useAuthStore((state) => state.login);
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
@@ -57,7 +56,8 @@ function LoginPage() {
       alert(data.message);
 
       if (isLogin) {
-        login({ username: formData.username });
+        // Use async login to automatically load user routes
+        await login({ username: formData.username });
       } else {
         setIsLogin(true);
       }
@@ -67,59 +67,83 @@ function LoginPage() {
   };
 
   return (
-    <div className="futuristic-bg">
-      <div className="glass-card">
-        <h1 className="neon-title">Welcome</h1>
-        <h2 className="switch-title">{isLogin ? 'Login' : 'Register'}</h2>
+    <div className="login-container">
+      <div className="login-card">
+        <h1 className="login-title">Welcome to RoutePlanner</h1>
+        <p className="login-subtitle">
+          {isLogin ? 'Sign in to your account' : 'Create your account'}
+        </p>
 
-        <form onSubmit={handleSubmit} className="futuristic-form">
+        <form onSubmit={handleSubmit} className="login-form">
           {!isLogin && (
+            <div className="form-group">
+              <label className="form-label">Email</label>
+              <input
+                type="email"
+                name="email"
+                className="form-input"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          )}
+          
+          <div className="form-group">
+            <label className="form-label">Username</label>
             <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
+              type="text"
+              name="username"
+              className="form-input"
+              placeholder="Enter your username"
+              value={formData.username}
               onChange={handleChange}
               required
             />
-          )}
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-          {!isLogin && (
+          </div>
+          
+          <div className="form-group">
+            <label className="form-label">Password</label>
             <input
               type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
+              name="password"
+              className="form-input"
+              placeholder="Enter your password"
+              value={formData.password}
               onChange={handleChange}
               required
             />
+          </div>
+          
+          {!isLogin && (
+            <div className="form-group">
+              <label className="form-label">Confirm Password</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                className="form-input"
+                placeholder="Confirm your password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+            </div>
           )}
-          <button type="submit" className="neon-btn">
-            {isLogin ? 'Login' : 'Register'}
+          
+          <button type="submit" className="submit-btn">
+            {isLogin ? 'Sign In' : 'Create Account'}
           </button>
         </form>
 
-        <p className="switch-text">
-          {isLogin ? "Don't have an account?" : 'Already have an account?'}
-          <button onClick={toggleForm} className="switch-btn">
-            {isLogin ? ' Register' : ' Login'}
-          </button>
-        </p>
+        <div className="switch-container">
+          <p className="switch-text">
+            {isLogin ? "Don't have an account?" : 'Already have an account?'}
+            <button onClick={toggleForm} className="switch-btn">
+              {isLogin ? ' Sign up' : ' Sign in'}
+            </button>
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -47,63 +47,68 @@ function SaveRoute() {
   };
 
   // Don't show save button if no route is available
-  if (!currentRoute.destination || !currentRoute.path.length) {
+  if (!currentRoute.destination || !currentRoute.path || !currentRoute.path.length) {
     return null;
   }
 
   // Don't show save button if user is not logged in
   if (!user) {
     return (
-      <div className="save-route-container">
-        <div className="login-required">
-          <p>Please log in to save routes</p>
+      <div className="save-section">
+        <div className="save-form">
+          <div className="login-required">
+            <p>Please log in to save routes</p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="save-route-container">
+    <div className="save-section">
       {!showSaveForm ? (
         <button 
-          className="save-route-btn"
+          className="save-btn"
           onClick={() => setShowSaveForm(true)}
         >
           💾 Save Route
         </button>
       ) : (
-        <div className="save-route-form">
+        <div className="save-form">
           <h3>Save Your Route</h3>
           <form onSubmit={handleSave}>
-            <div className="form-group">
-              <label htmlFor="routeName">Route Name *</label>
-              <input
-                id="routeName"
-                type="text"
-                value={routeName}
-                onChange={(e) => setRouteName(e.target.value)}
-                placeholder="e.g., Weekend Hike to Tel Aviv"
-                required
-                disabled={isSaving}
-              />
+            <div className="form-row">
+              <div className="form-group">
+                <label className="form-label">Route Name *</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={routeName}
+                  onChange={(e) => setRouteName(e.target.value)}
+                  placeholder="e.g., Weekend Hike to Tel Aviv"
+                  required
+                  disabled={isSaving}
+                />
+              </div>
             </div>
             
             <div className="form-group">
-              <label htmlFor="description">Description (optional)</label>
+              <label className="form-label">Description (optional)</label>
               <textarea
-                id="description"
+                className="form-input"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Add notes about your route..."
                 rows="3"
                 disabled={isSaving}
+                style={{ resize: 'vertical', minHeight: '80px' }}
               />
             </div>
             
             <div className="form-actions">
               <button 
                 type="button" 
-                className="cancel-btn"
+                className="btn-secondary"
                 onClick={handleCancel}
                 disabled={isSaving}
               >

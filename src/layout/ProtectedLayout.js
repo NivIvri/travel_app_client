@@ -12,12 +12,12 @@ function ProtectedLayout() {
   }
 
   return (
-    <>
+    <div style={{ minHeight: '100vh' }}>
       <Header />
-      <div>
+      <main>
         <Outlet />
-      </div>
-    </>
+      </main>
+    </div>
   );
 }
 
