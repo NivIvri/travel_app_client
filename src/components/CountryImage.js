@@ -5,7 +5,7 @@ import '../style/CountryImage.css';
 const FALLBACK_IMG =
   'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=500&fit=crop&auto=format';
 
-function CountryImage() {
+function CountryImage(){
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
