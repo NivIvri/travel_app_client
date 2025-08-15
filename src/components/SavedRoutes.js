@@ -110,9 +110,7 @@ function SavedRoutes() {
             
             <div className="route-details">
               <p className="route-destination">📍 {route.destination}</p>
-              {route.description && (
-                <p className="route-description">{route.description}</p>
-              )}
+              <p className="route-description">{route.description?.trim() || '\u00A0'}</p>
               <p className="route-date">Saved: {formatDate(route.createdAt)}</p>
             </div>
             

@@ -1,0 +1,29 @@
+{
+  "name": "routeplanner-server",
+  "version": "1.0.0",
+  "description": "Backend server for RoutePlanner with JWT authentication",
+  "main": "server-example.js",
+  "scripts": {
+    "start": "node server-example.js",
+    "dev": "nodemon server-example.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "cors": "^2.8.5",
+    "mongoose": "^7.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "express",
+    "jwt",
+    "authentication",
+    "mongodb",
+    "routes"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+} 

@@ -131,6 +131,7 @@
   line-height: 1.5;
   margin: 12px 0;
   font-style: italic;
+  min-height: 15px;
 }
 
 .route-date {

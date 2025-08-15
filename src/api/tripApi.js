@@ -1,4 +1,5 @@
 import polyline from "@mapbox/polyline";
+import { getAuthHeaders, getStoredToken } from "./authApi";
 const MAX_POINTS = 200; 
 const API_BASE = "http://localhost:5000/api";
 
@@ -140,13 +141,37 @@ function encodeLonLat(coords) {
   return polyline.encode(thinned.map(([lon, lat]) => [lat, lon]));
 }
 
-export async function saveRouteToServer(routeData, token) {
-  // Build encoded payload
-  const pathEncoded = encodeLonLat(routeData.path);
-  const pathDaysEncoded = (routeData.pathDays || []).map(encodeLonLat);
+export async function saveRouteToServer(routeData) {
+  // Optimize route data before saving to server
+  const optimizedRouteData = {
+    ...routeData,
+    path: optimizeRouteForStorage(routeData.path, 50),
+    pathDays: routeData.pathDays ? routeData.pathDays.map(day => optimizeRouteForStorage(day, 50)) : []
+  };
+  
+  console.log(`Route data optimized for storage: ${JSON.stringify(optimizedRouteData).length} characters`);
+  
+  // Encode coordinates as polyline strings for storage
+  const encodeLonLat = (coords) => {
+    if (!coords || !Array.isArray(coords)) return "";
+    return polyline.encode(coords.map(([lon, lat]) => [lat, lon]));
+  };
+
+  const thin = (coords, max) => {
+    if (!coords || coords.length <= max) return coords;
+    const step = Math.floor(coords.length / max);
+    const thinned = [];
+    for (let i = 0; i < coords.length; i += step) thinned.push(coords[i]);
+    if (thinned[thinned.length - 1] !== coords[coords.length - 1]) {
+      thinned.push(coords[coords.length - 1]);
+    }
+    return thinned;
+  };
+
+  const pathEncoded = encodeLonLat(thin(optimizedRouteData.path, 200));
+  const pathDaysEncoded = (optimizedRouteData.pathDays || []).map(d => encodeLonLat(thin(d, 200)));
 
   const payload = {
-    username: routeData.username,          // if you still send it
     name: routeData.name,
     description: routeData.description,
     destination: routeData.destination,
@@ -160,8 +185,8 @@ export async function saveRouteToServer(routeData, token) {
   const json = JSON.stringify(payload);
   console.log(`Route payload size: ${json.length} chars`);
 
-  const headers = { "Content-Type": "application/json" };
-  if (token) headers.Authorization = `Bearer ${token}`;
+  // Use authentication headers
+  const headers = getAuthHeaders();
 
   // Simple retry for 429/5xx; handle 413 by thinning harder
   const postOnce = async (body) => {
@@ -194,7 +219,6 @@ export async function saveRouteToServer(routeData, token) {
   }
 }
 
-
 // Server-side route operations
 export async function saveRouteToServer1(routeData) {
   // Optimize route data before saving to server
@@ -208,9 +232,7 @@ export async function saveRouteToServer1(routeData) {
   
   const response = await fetch(`${API_BASE}/routes`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: getAuthHeaders(),
     body: JSON.stringify(optimizedRouteData),
   });
 
@@ -220,7 +242,9 @@ export async function saveRouteToServer1(routeData) {
 }
 
 export async function getUserRoutes(username) {
-  const response = await fetch(`${API_BASE}/routes?username=${encodeURIComponent(username)}`);
+  const response = await fetch(`${API_BASE}/routes?username=${encodeURIComponent(username)}`, {
+    headers: getAuthHeaders()
+  });
   
   const data = await response.json();
   if (!response.ok) throw new Error(data.message);
@@ -251,48 +275,39 @@ export async function getUserRoutes(username) {
     if (route.pathEncoded) {
       try {
         const decoded = polyline.decode(route.pathEncoded);
-        console.log('Decoded path length:', decoded.length, 'First point:', decoded[0]);
-        decodedRoute.path = decoded.map(([lat, lon]) => [lon, lat]); // Convert to [lon, lat] format
-        console.log('Converted path first point:', decodedRoute.path[0]);
+        decodedRoute.path = decoded.map(([lat, lon]) => [lon, lat]);
+        console.log('Successfully decoded path with', decodedRoute.path.length, 'points');
       } catch (error) {
         console.error('Error decoding path:', error);
         decodedRoute.path = [];
       }
-    } else if (route.path && Array.isArray(route.path)) {
-      console.log('Route has regular path data (not encoded)');
-      decodedRoute.path = route.path;
-    } else {
-      console.log('No pathEncoded found for route:', route.name);
     }
     
     // Decode pathDays if they're encoded
     if (route.pathDaysEncoded && Array.isArray(route.pathDaysEncoded)) {
       try {
-        decodedRoute.pathDays = route.pathDaysEncoded.map((encodedDay, index) => {
+        decodedRoute.pathDays = route.pathDaysEncoded.map(encodedDay => {
           const decoded = polyline.decode(encodedDay);
-          console.log(`Decoded pathDay ${index} length:`, decoded.length);
-          return decoded.map(([lat, lon]) => [lon, lat]); // Convert to [lon, lat] format
+          return decoded.map(([lat, lon]) => [lon, lat]);
         });
+        console.log('Successfully decoded pathDays with', decodedRoute.pathDays.length, 'days');
       } catch (error) {
         console.error('Error decoding pathDays:', error);
         decodedRoute.pathDays = [];
       }
-    } else if (route.pathDays && Array.isArray(route.pathDays)) {
-      console.log('Route has regular pathDays data (not encoded)');
-      decodedRoute.pathDays = route.pathDays;
-    } else {
-      console.log('No pathDaysEncoded found for route:', route.name);
     }
     
     return decodedRoute;
   });
   
+  console.log('Final decoded routes:', decodedRoutes.length);
   return decodedRoutes;
 }
 
 export async function deleteRouteFromServer(routeId, username) {
-  const response = await fetch(`${API_BASE}/routes/${routeId}?username=${encodeURIComponent(username)}`, {
+  const response = await fetch(`${API_BASE}/routes/${routeId}`, {
     method: "DELETE",
+    headers: getAuthHeaders(),
   });
 
   const data = await response.json();

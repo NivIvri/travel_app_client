@@ -7,12 +7,18 @@ import "../style/Header.css";
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { logout, user } = useAuthStore();
+  const { logout, user, isLoading } = useAuthStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/");
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Force navigation even if logout fails
+      navigate("/");
+    }
   };
 
   const isActive = (path) => location.pathname === path;
@@ -66,8 +72,12 @@ function Header() {
               <div className="user-info">
                 Welcome, {user.username}
               </div>
-              <button className="logout-btn" onClick={handleLogout}>
-                Logout
+              <button 
+                className={`logout-btn ${isLoading ? 'loading' : ''}`}
+                onClick={handleLogout}
+                disabled={isLoading}
+              >
+                {isLoading ? 'Logging out...' : 'Logout'}
               </button>
             </>
           ) : (
