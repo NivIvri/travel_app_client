@@ -1,4 +1,4 @@
-/* CreateRoute.css - Elegant & Sophisticated */
+/* CreateRoute.css - Modern Side-by-Side Layout */
 
 .create-route-container {
   min-height: 100vh;
@@ -7,7 +7,7 @@
 }
 
 .create-route-header {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto 40px;
   text-align: center;
 }
@@ -28,19 +28,55 @@
   letter-spacing: -0.01em;
 }
 
-.create-route-form {
-  max-width: 600px;
+/* Main Content Layout */
+.create-route-content {
+  max-width: 1400px;
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0.8);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* Form Section */
+.form-section {
+  position: sticky;
+  top: 32px;
+}
+
+.form-card {
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  padding: 40px;
+  padding: 32px;
   box-shadow: 
     0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   animation: fadeInUp 0.6s ease-out;
+}
+
+.form-card-header {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.form-card-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.form-card-header p {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+.create-route-form {
+  margin: 0;
 }
 
 .form-group {
@@ -135,6 +171,129 @@
   animation: spin 1s linear infinite;
 }
 
+/* Trip type options styling */
+.trip-type-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.trip-type-option {
+  position: relative;
+  cursor: pointer;
+}
+
+.trip-type-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.trip-type-label {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(203, 213, 225, 0.5);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  color: #475569;
+  gap: 16px;
+}
+
+.trip-type-option input[type="radio"]:checked + .trip-type-label {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: #3b82f6;
+  color: #1e293b;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.trip-type-option:hover .trip-type-label {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateY(-1px);
+}
+
+.trip-type-icon {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+}
+
+.trip-type-content {
+  flex: 1;
+}
+
+.trip-type-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+.route-type-description {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+/* Result Section */
+.result-section {
+  min-height: 600px;
+}
+
+.loading-card,
+.result-card,
+.empty-state-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: fadeInUp 0.6s ease-out;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.empty-state-card {
+  color: #64748b;
+}
+
+.empty-state-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+
+.empty-state-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.empty-state-card p {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+
 /* Loading spinner */
 @keyframes spin {
   0% { transform: translate(-50%, -50%) rotate(0deg); }
@@ -172,59 +331,22 @@
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
-/* Trip type options styling */
-.trip-type-options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.trip-type-option {
-  position: relative;
-  cursor: pointer;
-}
-
-.trip-type-option input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.trip-type-label {
-  display: block;
-  background: rgba(255, 255, 255, 0.6);
-  border: 2px solid rgba(203, 213, 225, 0.5);
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  color: #475569;
-}
-
-.trip-type-option input[type="radio"]:checked + .trip-type-label {
-  background: rgba(59, 130, 246, 0.1);
-  border-color: #3b82f6;
-  color: #1e293b;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.trip-type-option:hover .trip-type-label {
-  background: rgba(255, 255, 255, 0.8);
-  transform: translateY(-1px);
-}
-
-/* Route type descriptions */
-.route-type-description {
-  font-size: 12px;
-  color: #64748b;
-  margin-top: 8px;
-  line-height: 1.4;
-}
-
 /* Responsive design */
+@media (max-width: 1200px) {
+  .create-route-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .form-section {
+    position: static;
+  }
+  
+  .result-section {
+    min-height: auto;
+  }
+}
+
 @media (max-width: 768px) {
   .create-route-container {
     padding: 24px 16px;
@@ -238,18 +360,31 @@
     font-size: 16px;
   }
   
-  .create-route-form {
-    padding: 32px 24px;
+  .form-card,
+  .loading-card,
+  .result-card,
+  .empty-state-card {
+    padding: 24px;
     border-radius: 16px;
-  }
-  
-  .trip-type-options {
-    grid-template-columns: 1fr;
-    gap: 12px;
   }
   
   .trip-type-label {
     padding: 14px;
+    gap: 12px;
+  }
+  
+  .trip-type-icon {
+    font-size: 20px;
+    width: 36px;
+    height: 36px;
+  }
+  
+  .trip-type-name {
+    font-size: 14px;
+  }
+  
+  .route-type-description {
+    font-size: 11px;
   }
 }
 
@@ -258,8 +393,11 @@
     font-size: 28px;
   }
   
-  .create-route-form {
-    padding: 24px 20px;
+  .form-card,
+  .loading-card,
+  .result-card,
+  .empty-state-card {
+    padding: 20px;
   }
   
   .form-input,
@@ -271,6 +409,18 @@
   .generate-btn {
     padding: 14px 20px;
     font-size: 15px;
+  }
+  
+  .trip-type-label {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+  
+  .trip-type-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
   }
 }
 

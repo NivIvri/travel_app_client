@@ -5,11 +5,12 @@ import MapWithRoute from '../components/MapWithRoute';
 import WeatherForecast from '../components/WeatherForecast';
 import SaveRoute from '../components/SaveRoute';
 import CountryImage from '../components/CountryImage';
+import RouteEnrichment from '../components/RouteEnrichment';
 import { calculateRouteDistance } from '../utils/GeoUtils';
 import '../style/TripDisplay.css'; 
 
 
-function TripDisplay({ showSaveButton = true }) {
+function TripDisplay({ showSaveButton = true, showEnrichment = true }) {
   const { currentRoute } = useRouteStore();
   
 
@@ -67,6 +68,9 @@ function TripDisplay({ showSaveButton = true }) {
         <h3 className="section-title">3-Day Weather Forecast</h3>
         <WeatherForecast />
       </div>
+
+             {/* LLM Enrichment */}
+       {showEnrichment && <RouteEnrichment />}
 
       {/* Save Route - Only show if showSaveButton is true */}
       {showSaveButton && (

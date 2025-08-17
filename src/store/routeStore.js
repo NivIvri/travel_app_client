@@ -32,9 +32,13 @@ export const useRouteStore = create((set, get) => ({
       history: [
         ...state.history,
         {
+          id: Date.now().toString(), // Generate unique ID for history items
           destination: state.currentRoute.destination,
           type: state.currentRoute.type,
+          path: state.currentRoute.path,
+          pathDays: state.currentRoute.pathDays,
           date: new Date().toISOString(),
+          isSaved: false, // Mark as not saved initially
         },
       ],
     })),
@@ -163,6 +167,94 @@ export const useRouteStore = create((set, get) => ({
       throw error;
     }
   },
+
+  // Save a route from history to server
+  saveRouteFromHistory: async (historyItem, name, description, username) => {
+    if (!username) {
+      throw new Error('User must be logged in to save routes');
+    }
+
+    if (!historyItem.destination || !historyItem.path.length) {
+      throw new Error('No route to save');
+    }
+
+    const routeData = {
+      username,
+      name,
+      description,
+      destination: historyItem.destination,
+      type: historyItem.type,
+      path: historyItem.path,
+      pathDays: historyItem.pathDays,
+    };
+
+    try {
+      const response = await saveRouteToServer(routeData);
+      
+      // Decode the saved route before adding to local state
+      const savedRoute = response.route;
+      const decodedRoute = { ...savedRoute };
+      
+      // Decode path if it's encoded
+      if (savedRoute.pathEncoded) {
+        try {
+          const decoded = polyline.decode(savedRoute.pathEncoded);
+          decodedRoute.path = decoded.map(([lat, lon]) => [lon, lat]);
+        } catch (error) {
+          console.error('Error decoding saved route path:', error);
+          decodedRoute.path = routeData.path;
+        }
+      } else if (savedRoute.path && Array.isArray(savedRoute.path)) {
+        decodedRoute.path = savedRoute.path;
+      } else {
+        decodedRoute.path = routeData.path;
+      }
+      
+      // Decode pathDays if they're encoded
+      if (savedRoute.pathDaysEncoded && Array.isArray(savedRoute.pathDaysEncoded)) {
+        try {
+          decodedRoute.pathDays = savedRoute.pathDaysEncoded.map(encodedDay => {
+            const decoded = polyline.decode(encodedDay);
+            return decoded.map(([lat, lon]) => [lon, lat]);
+          });
+        } catch (error) {
+          console.error('Error decoding saved route pathDays:', error);
+          decodedRoute.pathDays = routeData.pathDays;
+        }
+      } else if (savedRoute.pathDays && Array.isArray(savedRoute.pathDays)) {
+        decodedRoute.pathDays = savedRoute.pathDays;
+      } else {
+        decodedRoute.pathDays = routeData.pathDays;
+      }
+      
+      // Add to local state with decoded data
+      const routeWithTimestamp = {
+        ...decodedRoute,
+        savedAt: decodedRoute.savedAt || decodedRoute.createdAt || decodedRoute.date || new Date().toISOString()
+      };
+      
+      set((state) => ({
+        savedRoutes: [...state.savedRoutes, routeWithTimestamp],
+        // Mark the history item as saved
+        history: state.history.map(item => 
+          item.id === historyItem.id 
+            ? { ...item, isSaved: true, savedRouteId: decodedRoute._id }
+            : item
+        ),
+      }));
+      
+      return decodedRoute;
+    } catch (error) {
+      console.error('Error saving route from history:', error);
+      throw error;
+    }
+  },
+
+  // Remove item from history
+  removeFromHistory: (historyId) =>
+    set((state) => ({
+      history: state.history.filter(item => item.id !== historyId),
+    })),
 
   resetRoute: () =>
     set(() => ({

@@ -1,0 +1,370 @@
+/* RouteEnrichment.css */
+
+.enrichment-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  overflow: hidden;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.enrichment-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px 24px;
+  position: relative;
+}
+
+.enrichment-header h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.enrichment-subtitle {
+  font-size: 14px;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.enriching-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.loading-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.loading-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  animation: loadingDots 1.4s infinite ease-in-out;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes loadingDots {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.enrichment-content {
+  padding: 24px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.enrichment-section {
+  margin-bottom: 24px;
+}
+
+.enrichment-section:last-child {
+  margin-bottom: 0;
+}
+
+.enrichment-section h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.enrichment-section p {
+  color: #475569;
+  line-height: 1.6;
+  margin: 0 0 12px 0;
+}
+
+.enrichment-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.enrichment-section li {
+  color: #475569;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(203, 213, 225, 0.3);
+  line-height: 1.5;
+}
+
+.enrichment-section li:last-child {
+  border-bottom: none;
+}
+
+.enrichment-section li:before {
+  content: "•";
+  color: #3b82f6;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+/* Segment Items */
+.segment-item {
+  background: rgba(248, 250, 252, 0.8);
+  border: 1px solid rgba(203, 213, 225, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.segment-item:last-child {
+  margin-bottom: 0;
+}
+
+.segment-item h5 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.segment-item p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0 0 12px 0;
+}
+
+.segment-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.difficulty {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.difficulty.easy {
+  background: rgba(34, 197, 94, 0.1);
+  color: #16a34a;
+}
+
+.difficulty.medium {
+  background: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+}
+
+.difficulty.hard {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+}
+
+.highlights {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.highlight-tag {
+  background: rgba(59, 130, 246, 0.1);
+  color: #2563eb;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* POI Items */
+.poi-item {
+  background: rgba(248, 250, 252, 0.8);
+  border: 1px solid rgba(203, 213, 225, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.poi-item:last-child {
+  margin-bottom: 0;
+}
+
+.poi-item h5 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.poi-item p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0 0 8px 0;
+}
+
+.poi-type {
+  background: rgba(139, 92, 246, 0.1);
+  color: #7c3aed;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+/* Food Stop Items */
+.food-stop-item {
+  background: rgba(248, 250, 252, 0.8);
+  border: 1px solid rgba(203, 213, 225, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.food-stop-item:last-child {
+  margin-bottom: 0;
+}
+
+.food-stop-item h5 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.food-stop-item p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0 0 8px 0;
+}
+
+.food-type {
+  background: rgba(34, 197, 94, 0.1);
+  color: #16a34a;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+/* Photo Spot Items */
+.photo-spot-item {
+  background: rgba(248, 250, 252, 0.8);
+  border: 1px solid rgba(203, 213, 225, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.photo-spot-item:last-child {
+  margin-bottom: 0;
+}
+
+.photo-spot-item h5 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.photo-spot-item p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0 0 8px 0;
+}
+
+.best-time {
+  background: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+/* Fallback State */
+.enrichment-fallback {
+  padding: 24px;
+  text-align: center;
+  color: #64748b;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .enrichment-panel {
+    margin: 16px 0;
+    border-radius: 12px;
+  }
+  
+  .enrichment-header {
+    padding: 16px 20px;
+  }
+  
+  .enrichment-header h3 {
+    font-size: 16px;
+  }
+  
+  .enrichment-content {
+    padding: 20px;
+    max-height: 500px;
+  }
+  
+  .segment-item,
+  .poi-item,
+  .food-stop-item,
+  .photo-spot-item {
+    padding: 12px;
+  }
+  
+  .segment-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .enrichment-header {
+    padding: 14px 16px;
+  }
+  
+  .enrichment-content {
+    padding: 16px;
+  }
+  
+  .enrichment-section {
+    margin-bottom: 20px;
+  }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
